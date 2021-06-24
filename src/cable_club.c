@@ -521,7 +521,7 @@ static void Task_LinkupAwaitTrainerCardData(u8 taskId)
 
     for (index = 0; index < GetLinkPlayerCount(); index++)
     {
-        CopyTrainerCardData(&gTrainerCards[index], gBlockRecvBuffer[index], gLinkPlayers[index].version);
+        CopyTrainerCardData(&gTrainerCards[index], gBlockRecvBuffer[index], gLinkPlayers[index].version, gLinkPlayers[index].versionModifier);
     }
 
     SetSuppressLinkErrorMessage(FALSE);
@@ -961,7 +961,7 @@ static void CB2_ReturnFromUnionRoomBattle(void)
         for (i = 0; i < playerCount; i++)
         {
             u32 version = (u8)gLinkPlayers[i].version;
-            if (version == VERSION_FIRE_RED || version == VERSION_LEAF_GREEN)
+            if (version == VERSION_FIRERED || version == VERSION_LEAFGREEN)
             {
                 linkedWithFRLG = TRUE;
                 break;

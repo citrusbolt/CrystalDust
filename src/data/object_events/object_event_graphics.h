@@ -334,3 +334,5 @@ const u32 gObjectEventPic_EmeraldBrendan[] = INCBIN_U32("graphics/object_events/
 const u16 gObjectEventPalette35[] = INCBIN_U16("graphics/object_events/palettes/35.gbapal");
 const u32 gObjectEventPic_EmeraldMay[] = INCBIN_U32("graphics/object_events/pics/people/emerald_may.4bpp");
 const u16 gObjectEventPalette36[] = INCBIN_U16("graphics/object_events/palettes/36.gbapal");
+const u16 gObjectEventPal_HeliodorBrendan[] = INCBIN_U16("graphics/object_events/palettes/heliodor_brendan.gbapal");
+const u16 gObjectEventPal_HeliodorMay[] = INCBIN_U16("graphics/object_events/palettes/heliodor_may.gbapal");

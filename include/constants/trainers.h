@@ -57,7 +57,7 @@
 #define TRAINER_PIC_ELITE_FOUR_GLACIA     38
 #define TRAINER_PIC_ELITE_FOUR_DRAKE      39
 #define TRAINER_PIC_LEADER_FALKNER        40
-#define TRAINER_PIC_LEADER_BUGSY         41
+#define TRAINER_PIC_LEADER_BUGSY          41
 #define TRAINER_PIC_LEADER_WHITNEY        42
 #define TRAINER_PIC_LEADER_FLANNERY       43
 #define TRAINER_PIC_LEADER_NORMAN         44
@@ -111,6 +111,8 @@
 #define TRAINER_PIC_RS_MAY                92
 #define TRAINER_PIC_EM_BRENDAN            93
 #define TRAINER_PIC_EM_MAY                94
+#define TRAINER_PIC_H_BRENDAN             95
+#define TRAINER_PIC_H_MAY                 96
 
 #define TRAINER_BACK_PIC_GOLD                   0
 #define TRAINER_BACK_PIC_KRIS                   1
@@ -120,8 +122,10 @@
 #define TRAINER_BACK_PIC_LEAF                   5
 #define TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN  6
 #define TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY      7
-#define TRAINER_BACK_PIC_DUDE                  8
+#define TRAINER_BACK_PIC_DUDE                   8
 #define TRAINER_BACK_PIC_STEVEN                 9
+#define TRAINER_BACK_PIC_HELIODOR_BRENDAN      10
+#define TRAINER_BACK_PIC_HELIODOR_MAY          11
 
 #define FACILITY_CLASS_HIKER                 0x0
 #define FACILITY_CLASS_AQUA_GRUNT_M          0x1
@@ -159,7 +163,7 @@
 #define FACILITY_CLASS_ELITE_FOUR_SIDNEY     0x21
 #define FACILITY_CLASS_ELITE_FOUR_PHOEBE     0x22
 #define FACILITY_CLASS_LEADER_ROXANNE        0x23
-#define FACILITY_CLASS_LEADER_BUGSY         0x24
+#define FACILITY_CLASS_LEADER_BUGSY          0x24
 #define FACILITY_CLASS_LEADER_TATE_AND_LIZA  0x25
 #define FACILITY_CLASS_SCHOOL_KID_M          0x26
 #define FACILITY_CLASS_SCHOOL_KID_F          0x27
@@ -207,8 +211,10 @@
 #define FACILITY_CLASS_RS_MAY                0x51
 #define FACILITY_CLASS_EM_BRENDAN            0x52
 #define FACILITY_CLASS_EM_MAY                0x53
+#define FACILITY_CLASS_H_BRENDAN             0x54
+#define FACILITY_CLASS_H_MAY                 0x55
 
-#define FACILITY_CLASSES_COUNT               0x54
+#define FACILITY_CLASSES_COUNT               0x56
 
 #define RS_FACILITY_CLASS_AQUA_LEADER_ARCHIE    0x0
 #define RS_FACILITY_CLASS_AQUA_GRUNT_M          0x1

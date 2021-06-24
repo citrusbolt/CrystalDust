@@ -8,8 +8,8 @@
 #define VERSION_SAPPHIRE 1
 #define VERSION_RUBY 2
 #define VERSION_EMERALD 3
-#define VERSION_FIRE_RED 4
-#define VERSION_LEAF_GREEN 5
+#define VERSION_FIRERED 4
+#define VERSION_LEAFGREEN 5
 #define VERSION_CRYSTAL_DUST 7
 #define VERSION_HEART_GOLD 7
 #define VERSION_SOUL_SILVER 8
@@ -17,6 +17,14 @@
 #define VERSION_PEARL 11
 #define VERSION_PLATINUM 12
 #define VERSION_GAMECUBE 15
+
+//Version ID modifiers used for identifying unofficial games.
+//The idea is that each developer will have an ID number that they can use in conjunction with one of the offical origin game IDs
+//so that they do not have to requisition a new ID for every project
+#define DEV_GAME_FREAK				0
+#define DEV_SOLITAIRI				1	//3-1 is Heliodor.  Pokemon are also flagged with 1-1, 2-1, 4-1, 5-1, and 12-1 for legality purposes
+#define DEV_SHINY_DRAGON_HUNTER		2	//4-2 is FireRed DX and 5-2 is LeafGreen DX
+#define DEV_SOLITAIRI_2				3	//4-3 is modified CrystalDust
 
 #define LANGUAGE_JAPANESE 1
 #define LANGUAGE_ENGLISH  2
@@ -27,8 +35,9 @@
 #define LANGUAGE_SPANISH  7
 #define NUM_LANGUAGES     7
 
-#define GAME_VERSION    (VERSION_CRYSTAL_DUST)
+#define GAME_VERSION    (VERSION_FIRERED)
 #define GAME_LANGUAGE   (LANGUAGE_ENGLISH)
+#define VERSION_MODIFIER (DEV_SOLITAIRI_2)
 
 // capacities of various saveblock objects
 #define DAYCARE_MON_COUNT 2

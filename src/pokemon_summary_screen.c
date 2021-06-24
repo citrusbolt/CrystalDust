@@ -3174,7 +3174,7 @@ static bool8 DoesMonOTMatchOwner(void)
 static bool8 DidMonComeFromOfficialGBAGames(void)
 {
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
-    if (sum->metGame > 0 && sum->metGame <= VERSION_LEAF_GREEN)
+    if (sum->metGame > 0 && sum->metGame <= VERSION_LEAFGREEN)
         return TRUE;
     return FALSE;
 }

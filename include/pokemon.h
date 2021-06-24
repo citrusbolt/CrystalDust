@@ -11,6 +11,8 @@ struct PokemonSubstruct0
     u32 experience;
     u8 ppBonuses;
     u8 friendship;
+	u8 versionModifier;	//Used to identify mons originated from specific unoffical games
+    u8 filler;
 };
 
 struct PokemonSubstruct1
@@ -94,11 +96,18 @@ struct BoxPokemon
     u8 hasSpecies:1;
     u8 isEgg:1;
     u8 altBall:3;
-    u8 unused:2;
+    u8 form:2;
     u8 otName[PLAYER_NAME_LENGTH];
     u8 markings;
     u16 checksum;
-    u16 unknown;
+    u16 shinyLeafA:1;
+	u16 shinyLeafB:1;
+	u16 shinyLeafC:1;
+	u16 shinyLeafD:1;
+	u16 shinyLeafE:1;
+	u16 shinyCrown:1;
+	u16 encounterType:5;	//Gen 4 Encounter Type
+	u16 unknown:5;
 
     union
     {

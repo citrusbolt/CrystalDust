@@ -671,13 +671,14 @@ void InitHostRFUtgtGname(struct GFtgtGname *data, u8 activity, bool32 started, s
     data->activity = activity;
     data->started = started;
     data->unk_00.language = GAME_LANGUAGE;
-    data->unk_00.version = VERSION_FIRE_RED;
+    data->unk_00.version = GAME_VERSION;
     data->unk_00.hasNews = FALSE;
     data->unk_00.hasCard = FALSE;
-    data->unk_00.isCrystalDust = TRUE;
+    data->unk_00.isCrystalDust = FALSE;
     data->unk_00.isChampion = FlagGet(FLAG_IS_CHAMPION);
     data->unk_00.hasNationalDex = IsNationalPokedexEnabled();
     data->unk_00.gameClear = FlagGet(FLAG_SYS_GAME_CLEAR);
+	data->versionModifier = VERSION_MODIFIER;
 }
 
 bool8 LinkRfu_GetNameIfCompatible(struct GFtgtGname *buff1, u8 *buff2, u8 idx)

@@ -2076,6 +2076,24 @@ static const struct SpriteTemplate gSpriteTemplateTable_TrainerBackSprites[] =
         .affineAnims = gUnknown_082FF618,
         .callback = sub_8039BB4,
     },
+    {
+        .tileTag = SPRITE_INVALID_TAG,
+        .paletteTag = 0,
+        .oam = &gOamData_831ACB0,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_EmeraldBrendan,
+        .affineAnims = gUnknown_082FF618,
+        .callback = sub_8039BB4,
+    },
+    {
+        .tileTag = SPRITE_INVALID_TAG,
+        .paletteTag = 0,
+        .oam = &gOamData_831ACB0,
+        .anims = NULL,
+        .images = gTrainerBackPicTable_EmeraldMay,
+        .affineAnims = gUnknown_082FF618,
+        .callback = sub_8039BB4,
+    },
 };
 
 static const u8 sSecretBaseFacilityClasses[2][5] =
@@ -2227,6 +2245,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u32 personality;
     u32 value;
     u16 checksum;
+	u8 versionModifier = VERSION_MODIFIER;
 
     ZeroBoxMonData(boxMon);
 
@@ -2285,6 +2304,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
     SetBoxMonData(boxMon, MON_DATA_MET_GAME, &gGameVersion);
+	SetBoxMonData(boxMon, MON_DATA_VERSION_MODIFIER, &versionModifier);
     value = ITEM_POKE_BALL;
     SetBoxMonData(boxMon, MON_DATA_POKEBALL, &value);
     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
@@ -3695,7 +3715,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
     struct PokemonSubstruct3 *substruct3 = NULL;
 
     // Any field greater than MON_DATA_ENCRYPT_SEPARATOR is encrypted and must be treated as such
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR && field < MON_DATA_FORM)
     {
         substruct0 = &(GetSubstruct(boxMon, boxMon->personality, 0)->type0);
         substruct1 = &(GetSubstruct(boxMon, boxMon->personality, 1)->type1);
@@ -4030,11 +4050,29 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
                 | (substruct3->giftRibbon7 << 26);
         }
         break;
+	case MON_DATA_FORM:
+		retVal = boxMon->form;
+		break;
+	case MON_DATA_SHINY_LEAVES:
+		retVal = 0;
+		retVal &= boxMon->shinyLeafA << 5;
+		retVal &= boxMon->shinyLeafB << 4;
+		retVal &= boxMon->shinyLeafC << 3;
+		retVal &= boxMon->shinyLeafD << 2;
+		retVal &= boxMon->shinyLeafE << 1;
+		retVal &= boxMon->shinyCrown;
+		break;
+	case MON_DATA_ENCOUNTER_TYPE:
+		retVal = boxMon->encounterType;
+		break;
+	case MON_DATA_VERSION_MODIFIER:
+		retVal = substruct0->versionModifier;
+		break;
     default:
         break;
     }
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR && field < MON_DATA_FORM)
         EncryptBoxMon(boxMon);
 
     return retVal;
@@ -4097,7 +4135,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
     struct PokemonSubstruct2 *substruct2 = NULL;
     struct PokemonSubstruct3 *substruct3 = NULL;
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR && field < MON_DATA_FORM)
     {
         substruct0 = &(GetSubstruct(boxMon, boxMon->personality, 0)->type0);
         substruct1 = &(GetSubstruct(boxMon, boxMon->personality, 1)->type1);
@@ -4356,11 +4394,28 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         substruct3->spDefenseIV = (ivs >> 25) & 0x1F;
         break;
     }
+	case MON_DATA_FORM:
+		SET8(boxMon->form);
+		break;
+	case MON_DATA_SHINY_LEAVES:
+		boxMon->shinyLeafA = *data & 0x20u >> 5;
+		boxMon->shinyLeafB = *data & 0x10u >> 4;
+		boxMon->shinyLeafC = *data & 0x8u >> 3;
+		boxMon->shinyLeafD = *data & 0x4u >> 2;
+		boxMon->shinyLeafE = *data & 0x2u >> 1;
+		boxMon->shinyCrown = *data & 0x1u;
+		break;
+	case MON_DATA_ENCOUNTER_TYPE:
+		SET8(boxMon->encounterType);
+		break;
+	case MON_DATA_VERSION_MODIFIER:
+		SET8(substruct0->versionModifier);
+		break;
     default:
         break;
     }
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR && field < MON_DATA_FORM)
     {
         boxMon->checksum = CalculateBoxMonChecksum(boxMon);
         EncryptBoxMon(boxMon);

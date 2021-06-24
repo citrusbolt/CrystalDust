@@ -2365,7 +2365,7 @@ s32 GetGameProgressForLinkTrade(void)
         whichGameSet = 0;
         version = (gLinkPlayers[GetMultiplayerId() ^ 1].version & 0xFF);
 
-        if (version == VERSION_FIRE_RED || version == VERSION_LEAF_GREEN || version == VERSION_CRYSTAL_DUST)
+        if (version == VERSION_FIRERED || version == VERSION_LEAFGREEN || version == VERSION_CRYSTAL_DUST)
             whichGameSet = 0;
         else if (version == VERSION_RUBY || version == VERSION_SAPPHIRE)
             whichGameSet = 1;
@@ -2373,26 +2373,26 @@ s32 GetGameProgressForLinkTrade(void)
             whichGameSet = 2;
 
         // If trading with Hoenn, more checks must be satisfied
-        if (whichGameSet > 0)
-        {
-            // Is player champion
-            if (gLinkPlayers[GetMultiplayerId()].progressFlagsCopy & 0xF0)
-            {
-                // Emerald
-                if (whichGameSet == 2)
-                {
-                    // Is partner champion
-                    if (gLinkPlayers[GetMultiplayerId() ^ 1].progressFlagsCopy & 0xF0)
-                        return TRADE_BOTH_PLAYERS_READY;
-                    else
-                        return TRADE_PARTNER_NOT_READY;
-                }
-            }
-            else
-            {
-                return TRADE_PLAYER_NOT_READY;
-            }
-        }
+        //if (whichGameSet > 0)
+        //{
+        //    // Is player champion
+        //    if (gLinkPlayers[GetMultiplayerId()].progressFlagsCopy & 0xF0)
+        //    {
+        //        // Emerald
+        //        if (whichGameSet == 2)
+        //        {
+        //            // Is partner champion
+        //            if (gLinkPlayers[GetMultiplayerId() ^ 1].progressFlagsCopy & 0xF0)
+        //                return TRADE_BOTH_PLAYERS_READY;
+        //            else
+        //                return TRADE_PARTNER_NOT_READY;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return TRADE_PLAYER_NOT_READY;
+        //    }
+        //}
     }
     return TRADE_BOTH_PLAYERS_READY;
 }
@@ -2520,8 +2520,8 @@ int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
     for (i = 0; i < GetLinkPlayerCount(); i++)
     {
         version = gLinkPlayers[i].version & 0xFF;
-        if (version == VERSION_FIRE_RED ||
-            version == VERSION_LEAF_GREEN)
+        if (version == VERSION_FIRERED ||
+            version == VERSION_LEAFGREEN)
         {
             versions = 0;
         }

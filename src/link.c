@@ -325,12 +325,17 @@ static void InitLocalLinkPlayer(void)
     gLocalLinkPlayer.gender = gSaveBlock2Ptr->playerGender;
     gLocalLinkPlayer.linkType = gLinkType;
     gLocalLinkPlayer.language = gGameLanguage;
-    // fake being FireRed for vanilla games, and transfer the real version for other hacks
-    gLocalLinkPlayer.version = VERSION_FIRE_RED | (gGameVersion << 8) | 0x4000;
+    gLocalLinkPlayer.version = gGameVersion + 0x4000;
+	gLocalLinkPlayer.versionModifier = VERSION_MODIFIER;
     gLocalLinkPlayer.lp_field_2 = 0x8000;
     // fake national dex so other games don't think they can't trade to us, we should be doing the only checks
-    gLocalLinkPlayer.progressFlags = (IsNationalPokedexEnabled() << 1) | 1;
-    if (FlagGet(FLAG_IS_CHAMPION))
+    //gLocalLinkPlayer.progressFlags = (IsNationalPokedexEnabled() << 1) | 1;
+    //if (FlagGet(FLAG_IS_CHAMPION))
+    //{
+    //    gLocalLinkPlayer.progressFlags |= 0x10;
+    //}
+	gLocalLinkPlayer.progressFlags = TRUE;
+    //if (FlagGet(FLAG_IS_CHAMPION))
     {
         gLocalLinkPlayer.progressFlags |= 0x10;
     }
@@ -611,7 +616,7 @@ static void ProcessRecvCmds(u8 unused)
                         if ((linkPlayer->version & 0xFF) == VERSION_RUBY || (linkPlayer->version & 0xFF) == VERSION_SAPPHIRE)
                         {
                             linkPlayer->progressFlagsCopy = 0;
-                            linkPlayer->neverRead = 0;
+                            //linkPlayer->neverRead = 0;
                             linkPlayer->progressFlags = 0;
                         }
                         /*else if ((linkPlayer->version & 0x3F00) > 0)
@@ -821,7 +826,7 @@ bool32 Link_AnyPartnersPlayingFRLG_JP(void)
 {
     int i;
 
-    i = AreAnyLinkPlayersUsingVersions(VERSION_FIRE_RED, VERSION_LEAF_GREEN);
+    i = AreAnyLinkPlayersUsingVersions(VERSION_FIRERED, VERSION_LEAFGREEN);
     if (i >= 0 && gLinkPlayers[i].language == LANGUAGE_JAPANESE)
     {
         return TRUE;

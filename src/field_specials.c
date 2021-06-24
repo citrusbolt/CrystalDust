@@ -76,6 +76,7 @@
 #include "constants/weather.h"
 #include "constants/metatile_labels.h"
 #include "palette.h"
+#include "graphics.h"
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
@@ -534,6 +535,7 @@ void SpawnLinkPartnerObjectEvent(void)
     u8 playerFacingDirection;
     u8 linkSpriteId;
     u8 i;
+	bool8 foundMatch = FALSE;
 
     myLinkPlayerNumber = GetMultiplayerId();
     playerFacingDirection = GetPlayerFacingDirection();
@@ -560,30 +562,51 @@ void SpawnLinkPartnerObjectEvent(void)
     }
     for (i = 0; i < gSpecialVar_0x8004; i++)
     {
+		foundMatch = FALSE;
         if (myLinkPlayerNumber != i)
         {
-            switch ((u8)gLinkPlayers[i].version)
-            {
-                case VERSION_RUBY:
-                case VERSION_SAPPHIRE:
-                    if (gLinkPlayers[i].gender == 0)
-                        linkSpriteId = OBJ_EVENT_GFX_RS_BRENDAN;
-                    else
-                        linkSpriteId = OBJ_EVENT_GFX_RS_MAY;
-                    break;
-                case VERSION_EMERALD:
-                    if (gLinkPlayers[i].gender == 0)
-                        linkSpriteId = OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL;
-                    else
-                        linkSpriteId = OBJ_EVENT_GFX_RIVAL_MAY_NORMAL;
-                    break;
-                default:
-                    if (gLinkPlayers[i].gender == 0)
-                        linkSpriteId = OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL;
-                    else
-                        linkSpriteId = OBJ_EVENT_GFX_RIVAL_MAY_NORMAL;
-                    break;
-            }
+			switch ((u8)gLinkPlayers[i].versionModifier)
+			{
+				case DEV_SOLITAIRI:
+					if ((u8)gLinkPlayers[i].version == VERSION_EMERALD)
+					{
+						foundMatch = TRUE;
+						if (gLinkPlayers[i].gender == 0)
+							linkSpriteId = OBJ_EVENT_GFX_LINK_H_BRENDAN;
+						else
+							linkSpriteId = OBJ_EVENT_GFX_LINK_H_MAY;
+					}
+					break;
+				case DEV_SOLITAIRI_2:
+					if ((u8)gLinkPlayers[i].version == VERSION_FIRERED)
+					{
+						foundMatch = TRUE;
+						if (gLinkPlayers[i].gender == 0)
+							linkSpriteId = OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL;
+						else
+							linkSpriteId = OBJ_EVENT_GFX_RIVAL_MAY_NORMAL;
+					}
+					break;
+			}
+
+			if (!foundMatch)
+			{
+				if ((u8)gLinkPlayers[i].version == VERSION_RUBY || (u8)gLinkPlayers[i].version == VERSION_SAPPHIRE)
+				{
+					if (gLinkPlayers[i].gender == 0)
+						linkSpriteId = OBJ_EVENT_GFX_RS_BRENDAN;
+					else
+						linkSpriteId = OBJ_EVENT_GFX_RS_MAY;
+				}
+				else
+				{
+					if (gLinkPlayers[i].gender == 0)
+						linkSpriteId = OBJ_EVENT_GFX_EM_BRENDAN;
+					else
+						linkSpriteId = OBJ_EVENT_GFX_EM_MAY;
+				}
+			}
+			
             SpawnSpecialObjectEventParameterized(linkSpriteId, movementTypes[j], 240 - i, coordOffsets[j][0] + x + 7, coordOffsets[j][1] + y + 7, 0);
             LoadLinkPartnerObjectEventSpritePalette(linkSpriteId, 240 - i, i);
             j++;
@@ -602,6 +625,10 @@ static void LoadLinkPartnerObjectEventSpritePalette(u8 graphicsId, u8 localEvent
     adjustedPaletteNum = paletteNum + 6;
     if (graphicsId == OBJ_EVENT_GFX_RS_BRENDAN ||
         graphicsId == OBJ_EVENT_GFX_RS_MAY ||
+        graphicsId == OBJ_EVENT_GFX_EM_BRENDAN ||
+        graphicsId == OBJ_EVENT_GFX_EM_MAY ||
+        graphicsId == OBJ_EVENT_GFX_LINK_H_BRENDAN ||
+        graphicsId == OBJ_EVENT_GFX_LINK_H_MAY ||
         graphicsId == OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL ||
         graphicsId == OBJ_EVENT_GFX_RIVAL_MAY_NORMAL)
     {
@@ -620,12 +647,24 @@ static void LoadLinkPartnerObjectEventSpritePalette(u8 graphicsId, u8 localEvent
                 case OBJ_EVENT_GFX_RS_MAY:
                     LoadPalette(gObjectEventPalette34, 0x100 + (adjustedPaletteNum << 4), 0x20);
                     break;
-                case OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL:
-                    LoadPalette(gObjectEventPalette8, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                case OBJ_EVENT_GFX_EM_BRENDAN:
+                    LoadPalette(gObjectEventPalette35, 0x100 + (adjustedPaletteNum << 4), 0x20);
                     break;
-                case OBJ_EVENT_GFX_RIVAL_MAY_NORMAL:
-                    LoadPalette(gObjectEventPalette17, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                case OBJ_EVENT_GFX_EM_MAY:
+                    LoadPalette(gObjectEventPalette36, 0x100 + (adjustedPaletteNum << 4), 0x20);
                     break;
+				case OBJ_EVENT_GFX_LINK_H_BRENDAN:
+					LoadPalette(gObjectEventPal_HeliodorBrendan, 0x100 + (adjustedPaletteNum << 4), 0x20);
+					break;
+				case OBJ_EVENT_GFX_LINK_H_MAY:
+					LoadPalette(gObjectEventPal_HeliodorMay, 0x100 + (adjustedPaletteNum << 4), 0x20);
+					break;
+				case OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL:
+					LoadPalette(gObjectEventPalette8, 0x100 + (adjustedPaletteNum << 4), 0x20);
+					break;
+				case OBJ_EVENT_GFX_RIVAL_MAY_NORMAL:
+					LoadPalette(gObjectEventPalette17, 0x100 + (adjustedPaletteNum << 4), 0x20);
+					break;
             }
         }
     }
@@ -2936,8 +2975,8 @@ static u8 GetTextColorFromGraphicsId(u16 graphicsId)
         [OBJ_EVENT_GFX_SPENSER] =                   MSG_COLOR_BLUE,
         [OBJ_EVENT_GFX_NOLAND] =                    MSG_COLOR_BLUE,
         [OBJ_EVENT_GFX_LUCY] =                      MSG_COLOR_RED,
-        [OBJ_EVENT_GFX_UNUSED_NATU_DOLL] =          MSG_COLOR_SYS,
-        [OBJ_EVENT_GFX_UNUSED_MAGNEMITE_DOLL] =     MSG_COLOR_SYS,
+        //[OBJ_EVENT_GFX_UNUSED_NATU_DOLL] =          MSG_COLOR_SYS,
+        //[OBJ_EVENT_GFX_UNUSED_MAGNEMITE_DOLL] =     MSG_COLOR_SYS,
         [OBJ_EVENT_GFX_UNUSED_SQUIRTLE_DOLL] =      MSG_COLOR_SYS,
         [OBJ_EVENT_GFX_UNUSED_WOOPER_DOLL] =        MSG_COLOR_SYS,
         [OBJ_EVENT_GFX_UNUSED_PIKACHU_DOLL] =       MSG_COLOR_SYS,

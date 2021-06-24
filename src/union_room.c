@@ -1231,22 +1231,22 @@ static u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *data, 
 {
     struct UnkStruct_x20 *structPtr = &data->field_0->arr[id];
 
-    if (gPlayerCurrActivity == ACTIVITY_TRADE &&
-        structPtr->gname_uname.gname.unk_00.version != VERSION_FIRE_RED &&
-        structPtr->gname_uname.gname.unk_00.version != VERSION_LEAF_GREEN &&
-        structPtr->gname_uname.gname.unk_00.version != VERSION_CRYSTAL_DUST)
-    {
-        if (!(gSaveBlock2Ptr->specialSaveWarpFlags & CHAMPION_SAVEWARP))
-            return UR_TRADE_PLAYER_NOT_READY;
-        else if (structPtr->gname_uname.gname.unk_00.isChampion)
-            return UR_TRADE_READY;
-    }
-    else
-    {
+    //if (gPlayerCurrActivity == ACTIVITY_TRADE &&
+    //    structPtr->gname_uname.gname.unk_00.version != VERSION_FIRE_RED &&
+    //    structPtr->gname_uname.gname.unk_00.version != VERSION_LEAF_GREEN &&
+    //    structPtr->gname_uname.gname.unk_00.version != VERSION_CRYSTAL_DUST)
+    //{
+    //    if (!(gSaveBlock2Ptr->specialSaveWarpFlags & CHAMPION_SAVEWARP))
+    //        return UR_TRADE_PLAYER_NOT_READY;
+    //    else if (structPtr->gname_uname.gname.unk_00.isChampion)
+    //        return UR_TRADE_READY;
+    //}
+    //else
+    //{
         return UR_TRADE_READY;
-    }
-
-    return UR_TRADE_PARTNER_NOT_READY;
+    //}
+	//
+    //return UR_TRADE_PARTNER_NOT_READY;
 }
 
 static void AskToJoinRfuGroup(struct WirelessLink_Group *data, s32 id)
@@ -1498,7 +1498,7 @@ static void Task_ExchangeCards(u8 taskId)
             for (i = 0; i < GetLinkPlayerCount(); i++)
             {
                 recvBuff = gBlockRecvBuffer[i];
-                CopyTrainerCardData(&gTrainerCards[i], recvBuff, gLinkPlayers[i].version);
+                CopyTrainerCardData(&gTrainerCards[i], recvBuff, gLinkPlayers[i].version, gLinkPlayers[i].versionModifier);
             }
 
             if (GetLinkPlayerCount() == 2)
