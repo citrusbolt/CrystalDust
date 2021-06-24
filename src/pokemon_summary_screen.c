@@ -152,6 +152,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
         u8 sanity; // 0x35
         u8 OTName[17]; // 0x36
         u32 OTID; // 0x48
+		u8 versionModifier;
     } summary;
     u16 bgTilemapBuffers[PSS_PAGE_COUNT][2][0x400];
     u8 mode;
@@ -1428,6 +1429,7 @@ static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *mon)
         sum->metLevel = GetMonData(mon, MON_DATA_MET_LEVEL);
         sum->metGame = GetMonData(mon, MON_DATA_MET_GAME);
         sum->friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
+        sum->versionModifier = GetMonData(mon, MON_DATA_VERSION_MODIFIER);
         break;
     default:
         sum->ribbonCount = GetMonData(mon, MON_DATA_RIBBON_COUNT);
@@ -3174,7 +3176,7 @@ static bool8 DoesMonOTMatchOwner(void)
 static bool8 DidMonComeFromOfficialGBAGames(void)
 {
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
-    if (sum->metGame > 0 && sum->metGame <= VERSION_LEAFGREEN)
+    if (sum->metGame > 0 && sum->metGame <= VERSION_LEAFGREEN && sum->versionModifier != VERSION_MODIFIER)
         return TRUE;
     return FALSE;
 }
@@ -3182,7 +3184,7 @@ static bool8 DidMonComeFromOfficialGBAGames(void)
 static bool8 DidMonComeFromCrystalDust(void)
 {
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
-    return sum->metGame == VERSION_CRYSTAL_DUST;
+    return sum->metGame == VERSION_FIRERED && sum->versionModifier == VERSION_MODIFIER;
 }
 
 static bool8 DidMonComeFromAnyGBAGame(void)
