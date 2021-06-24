@@ -979,7 +979,11 @@ struct SaveBlock1
     /*0x31DC*/ struct Roamer roamer;
     /*0x31F8*/ struct EnigmaBerry enigmaBerry;
     /*0x322C*/ struct MEventBuffers unk_322C;
-    /*0x3598*/ u8 field_3598[0x180];
+    /*0x3598*/ u8 rivalName[PLAYER_NAME_LENGTH + 1];
+    /*0x35A0*/ u32 bankedMoney;
+    /*0x35A4*/ u32 gameBuild;
+    /*0x35A8*/ u32 saveBlockMagic;
+    /*0x35AC*/ u8 field_3598[0x16C];
     /*0x3718*/ u32 trainerHillTimes[4];
     /*0x3728*/ struct RamScript ramScript;
     /*0x3B14*/ struct RecordMixingGift recordMixingGift;
@@ -990,11 +994,7 @@ struct SaveBlock1
     /*0x3D5A*/ u8 filler3D5A[0xA];
     /*0x3D64*/ struct SaveTrainerHill trainerHill;
     /*0x3D70*/ struct WaldaPhrase waldaPhrase;
-    /*0x3D88*/ u8 rivalName[PLAYER_NAME_LENGTH + 1];
-    /*0x3D90*/ u32 bankedMoney;
-    /*0x3D94*/ u32 gameBuild;
-    /*0x3D9C*/ u32 saveBlockMagic;
-    // sizeof: 0x3D9C
+    // sizeof: 0x3D88
 };
 
 extern struct SaveBlock1* gSaveBlock1Ptr;
