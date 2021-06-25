@@ -3888,11 +3888,17 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         retVal = substruct3->metGame;
         break;
     case MON_DATA_POKEBALL:
-        retVal = substruct3->pokeball;
-        if (retVal == BALL_LEVEL)
-        {
-            retVal += boxMon->altBall;
-        }
+		if (boxMon->altBall)
+		{
+			if (substruct3->pokeball == BALL_SAFARI)
+				retVal = BALL_PARK;
+			else
+				retVal = BALL_PREMIER + boxMon->altBall;
+		}
+		else
+		{
+			retVal = substruct3->pokeball;
+		}
         break;
     case MON_DATA_OT_GENDER:
         retVal = substruct3->otGender;
@@ -4284,11 +4290,16 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
     case MON_DATA_POKEBALL:
     {
         u8 pokeball = *data;
-        if (pokeball >= BALL_LEVEL)
+        if (pokeball >= BALL_LEVEL && pokeball < BALL_PARK)
         {
-            substruct3->pokeball = BALL_LEVEL;
-            boxMon->altBall = pokeball - BALL_LEVEL;
+            substruct3->pokeball = BALL_POKE;
+            boxMon->altBall = pokeball - BALL_PREMIER;
         }
+		else if (pokeball == BALL_PARK)
+		{
+			substruct3->pokeball = BALL_SAFARI;
+			boxMon->altBall = 1;
+		}
         else
         {
             substruct3->pokeball = pokeball;
